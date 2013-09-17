@@ -30,6 +30,7 @@ import org.kohsuke.stapler.StaplerRequest;
 
 import hudson.Extension;
 import hudson.model.PageDecorator;
+import hudson.model.User;
 
 /**
  *
@@ -66,5 +67,23 @@ public class DisablePopupPageDecorator extends PageDecorator
     public String getDisplayName()
     {
         return Messages.DisablePopupPageDecorator_DisplayName();
+    }
+    
+    /**
+     * @return the disablePopup
+     */
+    public boolean isDisablePopupForCurrentUser()
+    {
+        switch(DisablePopupUserProperty.getDisablePopupForCurrentUser())
+        {
+        case TRUE:
+            return true;
+        case FALSE:
+            return false;
+        case NOCONF:
+        default:
+            break;
+        }
+        return isDisablePopup();
     }
 }

@@ -85,4 +85,21 @@ public class DisablePopupUserProperty extends UserProperty
             return name.toString();
         }
     }
+    
+    public static UserDisablePopupConf getDisablePopupForCurrentUser()
+    {
+        User user = User.current();
+        if(user == null)
+        {
+            return UserDisablePopupConf.NOCONF;
+        }
+        
+        DisablePopupUserProperty prop = user.getProperty(DisablePopupUserProperty.class);
+        if(prop == null)
+        {
+            return UserDisablePopupConf.NOCONF;
+        }
+        
+        return prop.getDisablePopup();
+    }
 }
