@@ -21,6 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-Behaviour.register({"A.model-link": function(e) {
-  $(e).stopObserving("mouseover");
-}});
+if(Behaviour.specify)
+{
+  // Jenkins >= 1.480
+  Behaviour.specify(
+    "A.model-link",
+    "disable-popup",
+    100, // later than breadcrumbs
+    function(e) {
+      $(e).stopObserving("mouseover");
+    }
+  );
+}
+else
+{
+  // Jenkins < 1.480
+  Behaviour.register({"A.model-link": function(e) {
+    $(e).stopObserving("mouseover");
+  }});
+}
