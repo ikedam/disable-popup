@@ -55,6 +55,13 @@ public class DisablePopupPageDecorator extends PageDecorator
         this.disablePopup = disablePopup;
     }
     
+    /**
+     * @param req
+     * @param json
+     * @return
+     * @throws hudson.model.Descriptor.FormException
+     * @see hudson.model.Descriptor#configure(org.kohsuke.stapler.StaplerRequest, net.sf.json.JSONObject)
+     */
     @Override
     public boolean configure(StaplerRequest req, JSONObject json)
             throws hudson.model.Descriptor.FormException
@@ -63,6 +70,10 @@ public class DisablePopupPageDecorator extends PageDecorator
         return true;
     }
     
+    /**
+     * @return
+     * @see hudson.model.PageDecorator#getDisplayName()
+     */
     @Override
     public String getDisplayName()
     {
@@ -74,7 +85,16 @@ public class DisablePopupPageDecorator extends PageDecorator
      */
     public boolean isDisablePopupForCurrentUser()
     {
-        switch(DisablePopupUserProperty.getDisablePopupForCurrentUser())
+        return isDisablePopupForUser(User.current());
+    }
+    
+    /**
+     * @param user
+     * @return
+     */
+    public boolean isDisablePopupForUser(User user)
+    {
+        switch(DisablePopupUserProperty.getDisablePopupForUser(user))
         {
         case TRUE:
             return true;

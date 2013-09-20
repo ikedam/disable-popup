@@ -46,21 +46,36 @@ public class DisablePopupUserProperty extends UserProperty
         return disablePopup;
     }
     
+    /**
+     * @param disablePopup
+     */
     @DataBoundConstructor
     public DisablePopupUserProperty(UserDisablePopupConf disablePopup)
     {
         this.disablePopup = disablePopup;
     }
     
+    /**
+     *
+     */
     @Extension
     public static class DescriptorImpl extends UserPropertyDescriptor
     {
+        /**
+         * @param user
+         * @return
+         * @see hudson.model.UserPropertyDescriptor#newInstance(hudson.model.User)
+         */
         @Override
         public UserProperty newInstance(User user)
         {
             return new DisablePopupUserProperty(UserDisablePopupConf.NOCONF);
         }
         
+        /**
+         * @return
+         * @see hudson.model.Descriptor#getDisplayName()
+         */
         @Override
         public String getDisplayName()
         {
@@ -68,9 +83,21 @@ public class DisablePopupUserProperty extends UserProperty
         }
     }
     
+    /**
+     *
+     */
     public static enum UserDisablePopupConf {
+        /**
+         * 
+         */
         NOCONF(Messages._UserDisablePopupConf_NOCONF_DisplayName()),
+        /**
+         * 
+         */
         TRUE(Messages._UserDisablePopupConf_TRUE_DisplayName()),
+        /**
+         * 
+         */
         FALSE(Messages._UserDisablePopupConf_FALSE_DisplayName());
         
         private Localizable name;
@@ -80,15 +107,21 @@ public class DisablePopupUserProperty extends UserProperty
             this.name = name;
         }
         
+        /**
+         * @return
+         */
         public String getDisplayName()
         {
             return name.toString();
         }
     }
     
-    public static UserDisablePopupConf getDisablePopupForCurrentUser()
+    /**
+     * @param user
+     * @return
+     */
+    public static UserDisablePopupConf getDisablePopupForUser(User user)
     {
-        User user = User.current();
         if(user == null)
         {
             return UserDisablePopupConf.NOCONF;
