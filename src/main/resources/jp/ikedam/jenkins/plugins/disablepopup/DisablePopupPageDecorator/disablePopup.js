@@ -25,6 +25,15 @@ if(Behaviour.specify)
 {
   // Jenkins >= 1.480
   Behaviour.specify(
+    "#breadcrumbs LI",
+    "disable-popup",
+    100, // later than breadcrumbs
+    function(e) {
+      if ($(e).hasClassName("no-context-menu"))  return;
+      $(e).stopObserving("mouseover");
+    }
+  );
+  Behaviour.specify(
     "A.model-link",
     "disable-popup",
     100, // later than breadcrumbs
@@ -36,6 +45,10 @@ if(Behaviour.specify)
 else
 {
   // Jenkins < 1.480
+  Behaviour.register({"#breadcrumbs LI": function(e) {
+    if ($(e).hasClassName("no-context-menu"))  return;
+    $(e).stopObserving("mouseover");
+  }});
   Behaviour.register({"A.model-link": function(e) {
     $(e).stopObserving("mouseover");
   }});
