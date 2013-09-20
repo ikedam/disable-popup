@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<user>
+  <fullName>test</fullName>
+  <description></description>
+  <properties>
+    <hudson.security.HudsonPrivateSecurityRealm_-Details>
+      <passwordHash>XLTeDI:9eb3a3204209f1bc185cf4286905a0b0ae261c905a7011ae3468d33a92b8ecf9</passwordHash>
+    </hudson.security.HudsonPrivateSecurityRealm_-Details>
+  </properties>
+</user>
