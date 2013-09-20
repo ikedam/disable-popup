@@ -24,6 +24,8 @@
 
 package jp.ikedam.jenkins.plugins.disablepopup;
 
+import java.util.logging.Logger;
+
 import jenkins.model.Jenkins;
 import net.sf.json.JSONObject;
 
@@ -40,6 +42,8 @@ import hudson.util.VersionNumber;
 @Extension
 public class DisablePopupPageDecorator extends PageDecorator
 {
+    private static Logger LOGGER = Logger.getLogger(DisablePopupPageDecorator.class.getName());
+    
     private boolean disablePopup = true;
     /**
      * @return the disablePopup
@@ -130,6 +134,10 @@ public class DisablePopupPageDecorator extends PageDecorator
         if(applicableJenkinsVersion == null)
         {
             applicableJenkinsVersion = Jenkins.getVersion().isOlderThan(new VersionNumber("1.510"));
+            if(!applicableJenkinsVersion)
+            {
+                LOGGER.warning("Disable Popup plugin works only for Jenkins < 1.510 (Do nothing in Jenkins >= 1.510).");
+            }
         }
         return applicableJenkinsVersion;
     }
