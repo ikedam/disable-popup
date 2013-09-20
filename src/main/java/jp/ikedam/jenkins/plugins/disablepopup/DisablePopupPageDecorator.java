@@ -24,6 +24,7 @@
 
 package jp.ikedam.jenkins.plugins.disablepopup;
 
+import jenkins.model.Jenkins;
 import net.sf.json.JSONObject;
 
 import org.kohsuke.stapler.StaplerRequest;
@@ -31,6 +32,7 @@ import org.kohsuke.stapler.StaplerRequest;
 import hudson.Extension;
 import hudson.model.PageDecorator;
 import hudson.model.User;
+import hudson.util.VersionNumber;
 
 /**
  *
@@ -56,6 +58,14 @@ public class DisablePopupPageDecorator extends PageDecorator
     }
     
     /**
+     * 
+     */
+    public DisablePopupPageDecorator()
+    {
+        load();
+    }
+    
+    /**
      * @param req
      * @param json
      * @return
@@ -67,6 +77,7 @@ public class DisablePopupPageDecorator extends PageDecorator
             throws hudson.model.Descriptor.FormException
     {
         setDisablePopup(json.getBoolean("disablePopup"));
+        save();
         return true;
     }
     
@@ -105,5 +116,21 @@ public class DisablePopupPageDecorator extends PageDecorator
             break;
         }
         return isDisablePopup();
+    }
+    
+    // I'm not sure transient is needed.
+    private static transient Boolean applicableJenkinsVersion = null;
+    /**
+     * Only work for Jenkins < 1.510.
+     * 
+     * @return
+     */
+    public boolean isApplicableJenkinsVersion()
+    {
+        if(applicableJenkinsVersion == null)
+        {
+            applicableJenkinsVersion = Jenkins.getVersion().isOlderThan(new VersionNumber("1.510"));
+        }
+        return applicableJenkinsVersion;
     }
 }
